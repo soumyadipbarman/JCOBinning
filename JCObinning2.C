@@ -31,7 +31,7 @@ int njetptmn = 10;
 TFile *inputData = new TFile("/home/soumyadip/Package/TUnfold/JetCharge/Prototype/Input/02May2023/PY8_bin.root");
 //TFile *inputData = new TFile("/home/soumyadip/Workspace/Zigzag/JCObinning/10May2023/PY8_flat.root");
 
-TH2D *RM[ndef][njet][nkappa][njetptmn];
+TH2D *RM[njetptmn][ndef][njet][nkappa];
 TH2* hist;
 
 genbins<<"{{{";
@@ -45,10 +45,10 @@ for(int id = 0; id < ndef; id++) {
         for (int ik = 0; ik < nkappa; ik++) {
 		if(ipt==6){
                 sprintf(histname, "analyzeBasicPat/RM_jc_pt%d_eta0_d%d_j%d_k%d", ipt, id, ij, ik);
-                RM[id][ij][ik][ipt] = (TH2D*) inputData->Get(histname);
+                RM[ipt][id][ij][ik] = (TH2D*) inputData->Get(histname);
                 //cout<<"RM : "<<histname<<endl;
 
-                hist = (TH2D*) RM[id][ij][ik][ipt]->Clone(); hist->RebinX(2);
+                hist = (TH2D*) RM[ipt][id][ij][ik]->Clone(); hist->RebinX(2);
 
                 //cout <<"Definition : "<<id<<" Jet No. : "<< ij<< " Kappa : "<<ik<<" pt : "<<ipt <<endl;
 	
